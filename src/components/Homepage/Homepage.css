@@ -1,0 +1,49 @@
+thead tr:first-child{
+ background-color: rgb(255, 102, 0);
+}
+
+thead tr th{
+ font-weight: bold !important;
+ color: #fff !important;
+}
+
+.fa-caret-up{
+ color : #969494;
+}
+
+.comments_count, .upVote_icon{
+ text-align: center !important;
+}
+
+.upVote_count{
+ text-align: justify;
+}
+
+tr:nth-child(2n){
+ background-color: rgb(228, 228, 219);;
+}
+
+.title{
+ font-weight: 400;
+ font-family: Verdana, Geneva, sans-serif;
+}
+
+.author, .hide{
+ font-weight: bold;
+}
+
+.url, .time{
+ font-weight: 400;
+}
+
+.url, .author, .time, .hide{
+ font-size: 10px;
+}
+
+.url, .time{
+ color: rgb(130, 130, 130);
+}
+
+.upVote_icon{
+ cursor: pointer;
+}
