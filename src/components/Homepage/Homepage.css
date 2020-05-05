@@ -44,6 +44,6 @@ tr:nth-child(2n){
  color: rgb(130, 130, 130);
 }
 
-.upVote_icon{
+.upVote_icon, .hide{
  cursor: pointer;
 }

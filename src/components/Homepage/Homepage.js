@@ -15,12 +15,14 @@ class Homepage extends Component {
   this.state = {
    data: '',
    pageNumber: 0,
-   voteCount:{}
+   voteCount:{},
+   hideNews:{}
   }
   this.fetchAPIData = this.fetchAPIData.bind(this);
   this.previousPage = this.previousPage.bind(this);
   this.nextPage = this.nextPage.bind(this);
   this.updateVoteHandler = this.updateVoteHandler.bind(this);
+  this.removeNewsHandler = this.removeNewsHandler.bind(this);
  }
 
  componentDidMount() {
@@ -47,6 +49,13 @@ class Homepage extends Component {
  this.setState({
   voteCount:{"id":id,"votes":updatedVotes}
  })
+ }
+
+ removeNewsHandler(id){
+  localStorage.setItem("hide_"+id,"true");
+  this.setState({
+   hideNews:{"id":id,"hide":true}
+  })
  }
 
 
@@ -96,12 +105,25 @@ class Homepage extends Component {
     let title = data.title !== null && data.title !== '' ? data.title : data.story_text;
     let commentsCount = data.num_comments !== null ? data.num_comments : '-';
     let votesCount = this.state.voteCount !=={}?this.state.voteCount.id === data.objectID?this.state.voteCount.votes: localStorage.getItem(data.objectID) !==null?localStorage.getItem(data.objectID):data.points:data.points;
-    return (<TableRow key={index}>
+    let newsDetails = (
+     <div>
+       <span className="title">{title}</span>
+       <span className="url">{" " + "(" + url + ") by "}</span>
+       <span className="author">{data.author}</span>
+       <span className="time">{" "+time}</span>
+       <span className="hide" onClick={() => this.removeNewsHandler(data.objectID)}>{" [ hide ]"}</span>
+       </div>
+    );
+    let hideNewsCheck = (
+     this.state.hideNews !=={}? this.state.hideNews.id === data.objectID?true:localStorage.getItem("hide_"+data.objectID) !==null?true:false:false
+    )
+    console.log(hideNewsCheck);
+    return (hideNewsCheck === false?<TableRow key={index}>
      <TableCell className="comments_count">{commentsCount}</TableCell>
      <TableCell className="upVote_count">{votesCount}</TableCell>
      <TableCell className="upVote_icon" onClick={() => this.updateVoteHandler(data.objectID,votesCount)}><i className="fa fa-caret-up"></i></TableCell>
-     <TableCell><span className="title">{title}</span><span className="url">{" " + "(" + url + ") by "}</span><span className="author">{data.author}</span>{" "}<span className="time">{time}</span><span className="hide">{" [ hide ]"}</span></TableCell>
-    </TableRow>
+     <TableCell>{newsDetails}</TableCell>
+    </TableRow>:null
     )
    })
    ) : ''
