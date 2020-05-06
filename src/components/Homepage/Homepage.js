@@ -14,7 +14,7 @@ class Homepage extends Component {
   super();
   this.state = {
    data: '',
-   pageNumber: 0,
+   pageNumber: window.location.href.split("#")[1]!==undefined?window.location.href.split("#")[1]:0,
    voteCount:{},
    hideNews:{}
   }
@@ -26,11 +26,16 @@ class Homepage extends Component {
  }
 
  componentDidMount() {
-  let page = window.location.search !== '' ? window.location.search : this.state.pageNumber
-  this.fetchAPIData(page);
+  console.log(window.location.href.split("#")[1]);
+  if( window.location.href.split("#")[1]!==undefined){
+   this.fetchAPIData(window.location.href.split("#")[1]);
+  }else{
+   this.fetchAPIData(this.state.pageNumber);
+  }
  }
 
  async fetchAPIData(pageNumber) {
+  window.location.hash = pageNumber
   await axios.get(`${CONSTANTS.API.API_URL}${pageNumber}`).then((response) => {
    if (response.status === 200) {
     this.setState({
@@ -60,7 +65,7 @@ class Homepage extends Component {
 
 
  previousPage() {
-  let page = this.state.pageNumber - 1
+  let page = Number(this.state.pageNumber) - 1
   if (this.state.pageNumber > 0) {
    this.setState({
     pageNumber: page
@@ -74,7 +79,7 @@ class Homepage extends Component {
  }
 
  nextPage() {
-  let page = this.state.pageNumber + 1
+  let page = Number(this.state.pageNumber) + 1
   if (this.state.pageNumber < 50) {
    this.setState({
     pageNumber: page
