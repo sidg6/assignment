@@ -26,7 +26,6 @@ class Homepage extends Component {
  }
 
  componentDidMount() {
-  console.log(window.location.href.split("#")[1]);
   if( window.location.href.split("#")[1]!==undefined){
    this.fetchAPIData(window.location.href.split("#")[1]);
   }else{
@@ -113,7 +112,7 @@ class Homepage extends Component {
     let newsDetails = (
      <div>
        <span className="title">{title}</span>
-       <span className="url">{" " + "(" + url + ") by "}</span>
+       <span className="url">{ " (" + url + ") by "}</span>
        <span className="author">{data.author}</span>
        <span className="time">{" "+time}</span>
        <span className="hide" onClick={() => this.removeNewsHandler(data.objectID)}>{" [ hide ]"}</span>
