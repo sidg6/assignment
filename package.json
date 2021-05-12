@@ -9,7 +9,7 @@
   "axios": "^0.19.2",
   "@material-ui/core": "^1.5.0",
   "@fortawesome/fontawesome-free": "^5.5.0",
-  "chart.js": "^2.8.0"
+  "chart.js": "^2.9.4"
  },
  "scripts": {
   "start": "react-scripts start",
